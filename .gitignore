@@ -1,0 +1,12 @@
+# .gitignore
+
+# Goのビルド関連
+*.exe
+*.o
+
+# 依存関係
+/vendor/
+
+# 環境変数と秘密鍵
+.env
+*.json
