@@ -17,7 +17,7 @@ func StreamsHandler(w http.ResponseWriter, r *http.Request) {
 	userID := "dummy-user-id"
 
 	// ストリーム情報を取得
-	streams, err := services.GetStreamsByUserID(userID)
+	streams, err := services.GetCombinedStreams(userID)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
