@@ -92,13 +92,13 @@ func GetYouTubeStreams(channelIDs []string) ([]StreamData, error) {
 	defer resp.Body.Close()
 
 	var videosData YoutubeVideoResponse
-	if err := json.NewDecoder(resp.Body).Decode(&videoData); err != nil {
+	if err := json.NewDecoder(resp.Body).Decode(&videosData); err != nil {
 		return nil, fmt.Errorf("YouTubeAPIレスポンスデコードエラー: %w", err)
 	}
 
 	// ストリームデータの作成
-	streams := make([]StreamData, 0, len(videoData.Items))
-	for _, item := range videoData.Items {
+	streams := make([]StreamData, 0, len(videosData.Items))
+	for _, item := range videosData.Items {
 		liveDetails := item.LiveStreamingDetails
 
 		// liveStreamingDetailsが存在しない場合はスキップ
