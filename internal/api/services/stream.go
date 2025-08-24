@@ -22,6 +22,7 @@ func GetCombinedStreams(userID string) ([]StreamData, error) {
     // Firestoreからチャンネルリストを取得
     userChannels, err := GetUserChannels(userID)
     if err != nil {
+        fmt.Printf("ユーザーチャンネルの取得に失敗: %v\n", err)
         return nil, fmt.Errorf("ユーザーチャンネルの取得に失敗しました: %v", err)
     }
 
