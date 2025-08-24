@@ -19,9 +19,23 @@ type StreamData struct {
 
 // GetCombinedStreams は登録されたチャンネルのストリームをすべて取得し、統合する
 func GetCombinedStreams(userID string) ([]StreamData, error) {
-    // ダミーのチャンネルIDを使用
-    youtubeChannelIDs := []string{"UC...", "UC..."}
-    twitchChannelIDs := []string{"streamer_name1", "streamer_name2"}
+    // Firestoreからチャンネルリストを取得
+    userChannels, err := GetUserChannels(userID)
+    if err != nil {
+        return nil, fmt.Errorf("ユーザーチャンネルの取得に失敗しました: %v", err)
+    }
+
+    var youtubeChannelIDs []string
+    var twitchChannelIDs []string
+
+    // 取得チャンネルをプラットフォームごとに分類
+    for id, channel := range userChannels {
+        if channel.Platform == "youtube" {
+            youtubeChannelIDs = append(youtubeChannelIDs, id)
+        } else if channel.Platform == "twitch" {
+            twitchChannelIDs = append(twitchChannelIDs, id)
+        }
+    }
 
     var allStreams []StreamData
     var wg sync.WaitGroup
